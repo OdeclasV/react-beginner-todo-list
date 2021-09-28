@@ -1,6 +1,5 @@
 import React from "react";
 import { AddToDo } from "./AddToDo.jsx";
-import { ToDoItem } from "./ToDoItem.jsx";
 
 //create your first component
 const Home = () => {
