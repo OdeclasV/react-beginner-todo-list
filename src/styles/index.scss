@@ -11,3 +11,27 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background: red;
+}
+
+li {
+    width: 25%;
+}
+
+input {
+    margin-bottom: 30px;
+}
+
+.todoCounts {
+    margin-top: 50px;
+}
+
+.list-group {
+    padding-left: 45%;
+}
