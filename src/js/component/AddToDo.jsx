@@ -1,9 +1,36 @@
 import React from "react";
+import { getServerTodos, updateServerTodos } from "./api";
 
 export const AddToDo = () => {
-	const [listOfToDos, setListOfToDos] = React.useState([]);
+	const [listOfToDos, setListOfToDos] = React.useState(null);
 	const [newTodo, setNewTodo] = React.useState("");
 	const [doneTask, setDoneTask] = React.useState(0);
+
+	React.useEffect(() => {
+		// loading initial todos from server
+		const fn = async () => {
+			const todos = await getServerTodos();
+			setListOfToDos(todos.map(item => item.label));
+		};
+		fn();
+	}, []); //empty array means it only run once
+
+	React.useEffect(() => {
+		// update todos from server
+		const fn = async () => {
+			updateServerTodos(
+				listOfToDos.map(item => ({ label: item, done: false }))
+			);
+		};
+
+		if (listOfToDos !== null) {
+			fn();
+		}
+	}, [listOfToDos]);
+
+	if (listOfToDos === null) {
+		return null;
+	}
 
 	return (
 		<>
@@ -38,6 +65,7 @@ export const AddToDo = () => {
 									);
 									setListOfToDos(newList);
 									setDoneTask(doneTask + 1);
+									console.log(newList);
 								}}>
 								Done
 							</button>
