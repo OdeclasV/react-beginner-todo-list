@@ -3,6 +3,7 @@ import React from "react";
 export const AddToDo = () => {
 	const [listOfToDos, setListOfToDos] = React.useState([]);
 	const [newTodo, setNewTodo] = React.useState("");
+	const [doneTask, setDoneTask] = React.useState(0);
 
 	return (
 		<>
@@ -36,14 +37,18 @@ export const AddToDo = () => {
 										}
 									);
 									setListOfToDos(newList);
+									setDoneTask(doneTask + 1);
 								}}>
-								X
+								Done
 							</button>
 						</li>
 					);
 				})}
 			</ul>
-			<div className="todoCounts">Total Todos: {listOfToDos.length}</div>
+			<div className="todoCounts">
+				Total Todos Left: {listOfToDos.length}
+			</div>
+			<div className="doneTask"> Total Todos Done: {doneTask}</div>
 		</>
 	);
 };
