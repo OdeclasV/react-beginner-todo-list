@@ -10,7 +10,8 @@ export const AddToDo = () => {
 		// loading initial todos from server
 		const fn = async () => {
 			const todos = await getServerTodos();
-			setListOfToDos(todos.map(item => item.label));
+			setListOfToDos(todos.map(item => item));
+			//setListOfToDos(todos);
 		};
 		fn();
 	}, []); //empty array means it only run once
@@ -18,9 +19,7 @@ export const AddToDo = () => {
 	React.useEffect(() => {
 		// update todos from server
 		const fn = async () => {
-			updateServerTodos(
-				listOfToDos.map(item => ({ label: item, done: false }))
-			);
+			updateServerTodos(listOfToDos.map(item => item));
 		};
 
 		if (listOfToDos !== null) {
@@ -42,7 +41,11 @@ export const AddToDo = () => {
 				onKeyUp={e => {
 					if (e.key === "Enter" && e.target.value != "") {
 						//let newList = listOfToDos.concat([newTodo]);
-						let newList = [...listOfToDos, newTodo]; // adding all elements of listoftodos, and then newTodo
+						let newList = [
+							...listOfToDos,
+							{ label: newTodo, done: false }
+						]; // adding all elements of listoftodos, and then newTodo
+						console.log(newList);
 						setListOfToDos(newList);
 						setNewTodo("");
 					}
@@ -54,10 +57,11 @@ export const AddToDo = () => {
 						<li
 							key={i}
 							className="list-group-item d-flex justify-content-between align-items-center">
-							{todo}
+							{todo.label}
 							<button
 								className="btn btn"
-								onClick={() => {
+								value={todo.label}
+								onClick={e => {
 									let newList = listOfToDos.filter(
 										(item, index) => {
 											return i !== index;
@@ -65,7 +69,8 @@ export const AddToDo = () => {
 									);
 									setListOfToDos(newList);
 									setDoneTask(doneTask + 1);
-									console.log(newList);
+									console.log(todo);
+									//todo.done = "true";
 								}}>
 								Done
 							</button>
